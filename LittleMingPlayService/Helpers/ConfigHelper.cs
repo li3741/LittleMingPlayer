@@ -24,6 +24,7 @@ namespace LittleMingPlayService
                         PlayerHelper.Inst().PlayList.AddRange(System.IO.Directory.GetFiles(MyConfigure.FilesFolder, MyConfigure.FileFormat, System.IO.SearchOption.AllDirectories));
                     }
                 }
+                QuartzHelper.InitJobs(player, MyConfigure.DailyPlayTime);
             }
             catch (Exception er)
             {

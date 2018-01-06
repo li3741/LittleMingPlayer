@@ -178,6 +178,7 @@ public class PlayerHelper : IDisposable
     {
         if (outputDevice?.PlaybackState != PlaybackState.Playing)
             return;
+        isSotpBySetPlayTime = true;
         outputDevice?.Stop();
     }
     public void SetVolume(int vol = 20)

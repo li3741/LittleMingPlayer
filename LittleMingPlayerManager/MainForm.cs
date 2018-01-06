@@ -92,6 +92,10 @@ namespace LittleMingPlayerManager
 
                 }
             }
+            else if (btnServiceState.Text == "已经停止")
+            {
+                RestartService();
+            }
             CheckServiceState();
         }
 
@@ -281,16 +285,25 @@ namespace LittleMingPlayerManager
             var ser = GetService(serviceName);
             if (ser != null)
             {
-                if (ser.Status == ServiceControllerStatus.Stopped || ser.CanStop)
+                try
                 {
                     if (ser.Status != ServiceControllerStatus.Stopped)
-                        ser.Stop();
+                    {
+                        if (ser.CanStop)
+                            ser.Stop();
+                    }
+
                     ser.Start();
                 }
-                else
+                catch (Exception er)
                 {
-                    MessageBox.Show("重启服务失败！请重试！");
+                    MessageBox.Show("停止服务失败,请稍等!");
+                    CheckServiceState();
                 }
+            }
+            else
+            {
+                MessageBox.Show("服务未安装!");
             }
         }
     }

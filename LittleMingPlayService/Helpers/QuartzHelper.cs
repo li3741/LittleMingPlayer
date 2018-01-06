@@ -11,7 +11,7 @@ namespace LittleMingPlayService
 {
     public class QuartzHelper
     {
-        public static void InitJobs(PlayerHelper player,string strtime)
+        public static void InitJobs(PlayerHelper player, string strtime)
         {
             try
             {
@@ -22,20 +22,21 @@ namespace LittleMingPlayService
 
                 for (int i = 0; i < strtimes.Length; i += 2)
                 {
-                    IJobDetail job = JobBuilder.Create<PlayMusicJob>().WithIdentity("job"+i.ToString(), "group1").Build();
+                    IJobDetail job = JobBuilder.Create<PlayMusicJob>().WithIdentity("job" + i.ToString(), "group1").Build();
                     job.JobDataMap.Add("playerHelper", player);
-                    ITrigger trigger = TriggerBuilder.Create().WithIdentity("trigger"+i.ToString(), "group2").ForJob("job"+i.ToString(), "group1")
-                        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(int.Parse(strtimes[i]),int.Parse(strtimes[i+1]))).Build();
+                    ITrigger trigger = TriggerBuilder.Create().WithIdentity("trigger" + i.ToString(), "group2").ForJob("job" + i.ToString(), "group1")
+                        .WithSchedule(CronScheduleBuilder.DailyAtHourAndMinute(int.Parse(strtimes[i]), int.Parse(strtimes[i + 1]))).Build();
                     scheduler.ScheduleJob(job, trigger);
                 }
-            }catch(Exception er)
+            }
+            catch (Exception er)
             {
                 throw er;
             }
         }
     }
 
-     
+
 
     public class PlayMusicJob : IJob
     {
@@ -47,11 +48,11 @@ namespace LittleMingPlayService
                 throw new Exception("请传递正确的音乐播放器进来实例");
             if (playerHelper.PlayListIndex == -1)
             {
-                playerHelper.Play(0);
+                playerHelper.Play(0, true);
             }
             else
             {
-                playerHelper.Play();
+                playerHelper.Play(playerHelper.PlayListIndex, true);
             }
             playerHelper.SetPlayTime(ConfigHelper.MyConfigure.dailyPlayTimeSpan);
             System.Diagnostics.Debug.WriteLine("running");

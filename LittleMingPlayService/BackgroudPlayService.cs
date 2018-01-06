@@ -26,6 +26,7 @@ namespace LittleMingPlayService
             //{
             ConfigHelper.InitConfig();
             service = HostingHelper.InitHosting();
+           
             //}
             //catch (Exception er)
             //{

@@ -17,7 +17,15 @@ namespace LittleMingPlayService
         [HttpGet]
         public string Play(int id)
         {
-            PlayerHelper.Inst().Play(id);
+            if (id < 0)
+            {
+                PlayerHelper.Inst().Stop();
+                return "stopped?";
+            }
+            else
+            {
+                PlayerHelper.Inst().Play(id);
+            }
             return PlayerHelper.Inst().GetPlayingFile();
         }
 
