@@ -15,11 +15,9 @@ namespace LittleMingPlayer
         public Form1()
         {
             InitializeComponent();
-            player.PlayList.AddRange(System.IO.Directory.GetFiles(@"C:\Users\li374\Music\", "*.mp3", System.IO.SearchOption.AllDirectories));
-            player.SetPlayTime(1);
-            QuartzHelper.InitJobs(player,"0,4,0,5");
+            ConfigHelper.InitConfig();
         }
-        PlayerHelper player = new PlayerHelper();
+        PlayerHelper player = PlayerHelper.Inst();
         private void button2_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -31,7 +29,8 @@ namespace LittleMingPlayer
 
         private void button1_Click(object sender, EventArgs e)
         {
-            player.Play(0);
+            player.Play(0, true);
+            player.SetPlayTime(1);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -67,6 +66,17 @@ namespace LittleMingPlayer
         private void button6_Click(object sender, EventArgs e)
         {
             player.PlayPreview();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var hosting = HostingHelper.InitHosting();
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            InstallHelper.InstallServce();
         }
     }
 }
