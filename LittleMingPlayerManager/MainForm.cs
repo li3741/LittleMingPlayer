@@ -23,7 +23,7 @@ namespace LittleMingPlayerManager
 
         private void btnAddTime_Click(object sender, EventArgs e)
         {
-            string times = picTime.Value.ToString("HH:mm");
+            string times = picTime.Value.ToString("HH:mm:")+txtPlayTime.Text;
             if (!cboTimeList.Items.Contains(times))
                 cboTimeList.Items.Add(times);
         }
@@ -211,7 +211,7 @@ namespace LittleMingPlayerManager
             var playerSettings = (LittleMingPlayService.PlayerConfigure)config.GetSection("PlayerSettings");
             if (playerSettings == null)
             {
-                MessageBox.Show("找不到默认的配置文件！");
+                MessageBox.Show("找不到默认的配置文件！需要配置好路径！");
                 return;
             }
             txtPlayTime.Text = playerSettings.dailyPlayTimeSpan.ToString();
@@ -219,15 +219,15 @@ namespace LittleMingPlayerManager
             txtFileFormat.Text = playerSettings.FileFormat;
             txtFloder.Text = playerSettings.FilesFolder;
             var times = playerSettings.DailyPlayTime.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            if (times == null || times.Length % 2 != 0)
+            if (times == null || times.Length % 3 != 0)
             {
                 MessageBox.Show("加载播放时间失败！请重新配置！");
             }
             else
             {
-                for (int i = 0; i < times.Length; i += 2)
+                for (int i = 0; i < times.Length; i += 3)
                 {
-                    cboTimeList.Items.Add(times[i] + ":" + times[i + 1]);
+                    cboTimeList.Items.Add(times[i] + ":" + times[i + 1] + ":" + times[i + 2]);
                 }
             }
         }

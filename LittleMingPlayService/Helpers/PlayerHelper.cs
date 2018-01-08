@@ -22,7 +22,7 @@ public class PlayerHelper : IDisposable
         }
         return _inst;
     }
-    private Timer playTime;
+    //  private Timer playTime;
     private WaveOutEvent outputDevice;
     private AudioFileReader audioFileReader;
     public List<string> PlayList;
@@ -35,20 +35,23 @@ public class PlayerHelper : IDisposable
         PlayStyle = PlayStyle.list;
 
     }
-    public void SetPlayTime(int minute)
-    {
-        playTime = new Timer();
-        playTime.Interval = 1000 * 8;// minute * 60;
-        playTime.Elapsed += PlayTime_Elapsed;
-        playTime.Start();
-    }
+    //public void SetPlayTime(int minute)
+    //{
+    //    playTime = new Timer();
+    //    playTime.Interval = 1000 * minute * 60;
+    //    playTime.Elapsed += PlayTime_Elapsed;
+    //    playTime.Start();
+    //}
     private bool isSotpBySetPlayTime = false;
-    private void PlayTime_Elapsed(object sender, ElapsedEventArgs e)
+    //private void PlayTime_Elapsed(object sender, ElapsedEventArgs e)
+    //{
+    //    playTime.Stop();
+    //    RunSlowly(-0.1F);
+    //}
+    public void StopSlowly()
     {
-        playTime.Stop();
         RunSlowly(-0.1F);
     }
-
     private void RunSlowly(float volum)
     {
         System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(() =>
